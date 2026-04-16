@@ -98,7 +98,7 @@ Color coding:
 ./tsearch -root ~/projects client
 
 # Wildcard search
-./tsearch '.txt*'
+./tsearch '.txt'
 
 # Search text inside text files
 ./tsearch -root ~/projects -text "TODO" -glob '*.txt'
