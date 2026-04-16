@@ -47,7 +47,7 @@ Wildcard search:
 
 - `*` matches any sequence of characters
 - `?` matches a single character
-- Example: `'go-brute*'` (quote wildcard in shell)
+- Example: `'.txt'` (quote wildcard in shell)
 
 Color coding:
 
