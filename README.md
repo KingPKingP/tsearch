@@ -108,3 +108,7 @@ Color coding:
 
 # Force fzf TUI + custom editor
 ./tsearch -ui fzf -editor "nvim" -root ~/projects
+
+<p align="center">
+  <img src="https://github.com/KingPKingP/tsearch/blob/main/example.png">
+</p>
