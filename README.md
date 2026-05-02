@@ -1,6 +1,3 @@
-<p align="center">
-  <img src="https://github.com/KingPKingP/tsearch/blob/main/example.png">
-</p>
 
 Simple, slick, and fast terminal CLI to search files and directories.
 
