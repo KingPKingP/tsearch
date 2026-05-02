@@ -9,6 +9,7 @@ Simple, slick, and fast terminal CLI to search files and directories.
 - Uses streamed `rg` output (no giant single-buffer capture).
 - Falls back to Go `filepath.WalkDir` if `rg` is not installed.
 - Uses a top-K heap for ranking (keeps only best `-limit` matches in memory).
+- Keeps files and directories in separate indexes so empty directories can be found.
 
 ## Build
 
@@ -46,12 +47,20 @@ Output format:
 
 - `/absolute/path <dir>`
 - `/absolute/path <file>`
+- `-format plain` prints only paths, one per line
+- `-format jsonl` prints one JSON object per result
+- `-0` prints NUL-separated paths for shell pipelines
 
 Wildcard search:
 
 - `*` matches any sequence of characters
 - `?` matches a single character
-- Example: `'.txt'` (quote wildcard in shell)
+- Example: `'*.txt'` (quote wildcard in shell)
+
+Ranking:
+
+- Exact basename and path-segment matches rank higher than embedded matches.
+- Matching is case-insensitive UTF-8 byte matching; it does not normalize Unicode.
 
 Color coding:
 
@@ -66,10 +75,10 @@ Color coding:
 
 ### Flags
 
-- `-root` root directory to search (default `/`)
+- `-root` root directory to search (default current directory)
 - `-type` `file|dir|all` (default `all`)
 - `-limit` max results (default `100`)
-- `-hidden` include hidden files (ripgrep mode)
+- `-hidden` include hidden files
 - `-no-ignore` ignore `.gitignore` and other ignore rules
 - `-color` `auto|always|never` (default `auto`)
 - `-i` force interactive mode (`reload` command refreshes the index)
@@ -79,6 +88,8 @@ Color coding:
 - `-once` run a single query and exit
 - `-ui` interactive UI mode: `auto|plain|fzf`
 - `-editor` editor command for open action (default `$VISUAL` / `$EDITOR`)
+- `-format` output format: `human|plain|jsonl` (default `human`)
+- `-0` use NUL-separated plain paths
 
 ## Examples
 
@@ -102,7 +113,7 @@ Color coding:
 ./tsearch -root ~/projects client
 
 # Wildcard search
-./tsearch '.txt'
+./tsearch '*.txt'
 
 # Search text inside text files
 ./tsearch -root ~/projects -text "TODO" -glob '*.txt'
@@ -112,4 +123,4 @@ Color coding:
 
 # Force fzf TUI + custom editor
 ./tsearch -ui fzf -editor "nvim" -root ~/projects
-
+```
